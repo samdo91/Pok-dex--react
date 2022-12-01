@@ -1,16 +1,24 @@
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import React, { useContext } from "react";
-import {
-  PokémonStateContext,
-  setPokémonStateContext,
-} from "../../userStore/contextApi/contextApi";
+import { request } from "../../userStore/api/api";
+
 function DetailPage() {
   const params = useParams();
-  const PokémonState = useContext(PokémonStateContext);
-  const setPokémonState = useContext(setPokémonStateContext);
-  console.log(PokémonState);
 
-  console.log(params);
+  const apiList = async (params) => {
+    const PokémonSpecialList = await request(
+      `api/v2/pokemon-species/${params}`
+    );
+    const PokémonList = await request(
+      `https://pokeapi.co/api/v2/pokemon/${params}`
+    );
+    console.log("PokémonSpecialList", PokémonSpecialList);
+    console.log("PokémoList", PokémonList);
+  };
+
+  useEffect(() => {
+    apiList(params.itemName);
+  }, []);
 
   return (
     <div>
