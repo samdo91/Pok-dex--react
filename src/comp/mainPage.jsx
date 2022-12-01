@@ -11,33 +11,36 @@ function MainPage() {
     pakesprites: [],
   });
 
+  const Pokémonlist = async () => {
+    const lists = await request("api/v2/pokemon?limit=24&offset=0");
+    let pritesList = [];
+
+    lists.results.forEach(async (item) => {
+      const pokeState = await request(item.url);
+      pritesList.push({
+        ...pokeState,
+        name: item.name,
+        url: item.url,
+        prites: pokeState.sprites.front_default,
+      });
+      const list = PokémonState.pakesprites.concat(pritesList);
+      setPokémonState({
+        ...PokémonState,
+        list: lists,
+        pakesprites: list,
+      });
+    });
+  };
+
   useEffect(() => {
     try {
-      const Pokémonlist = async () => {
-        const lists = await request("api/v2/pokemon?limit=10&offset=0");
-        let pritesList = [];
-
-        lists.results.map(async (item) => {
-          const pokeState = await request(item.url);
-          pritesList.push({
-            name: item.name,
-            url: item.url,
-            prites: pokeState.sprites.front_default,
-          });
-        });
-
-        setPokémonState({
-          ...PokémonState,
-          list: lists,
-          pakesprites: pritesList,
-        });
-      };
       Pokémonlist();
     } catch {
       console.log("api를 못받아 왔어!");
     }
   }, []); //
 
+  console.log(PokémonState);
   return (
     <div>
       <h1> 포켓몬 도감</h1>
