@@ -1,6 +1,14 @@
 import { css } from "@emotion/css";
+import React, { useContext } from "react";
+import {
+  PokémonStateContext,
+  setPokémonStateContext,
+} from "../userStore/contextApi/contextApi";
+
 function SearchBar(props) {
-  const { PokémonState, setPokémonState } = props;
+  const PokémonState = useContext(PokémonStateContext);
+  const setPokémonState = useContext(setPokémonStateContext);
+
   const handleOnSubmit = (event) => {
     event.preventDefault();
     console.log(event.target.dataset.keyword);

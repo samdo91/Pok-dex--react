@@ -1,10 +1,10 @@
-import MainPage from "./comp/mainPage.jsx";
 import "./App.css";
+import Router from "./comp/router/router.jsx";
 
 function App() {
   return (
     <div className="App">
-      <MainPage />
+      <Router />
     </div>
   );
 }

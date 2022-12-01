@@ -1,7 +1,14 @@
 import { css } from "@emotion/css";
+import React, { useContext } from "react";
+import { Link, Outlet } from "react-router-dom";
+import {
+  PokémonStateContext,
+  setPokémonStateContext,
+} from "../userStore/contextApi/contextApi";
 
-function BoardPage(props) {
-  const { PokémonState, setPokémonState } = props;
+function BoardPage() {
+  const PokémonState = useContext(PokémonStateContext);
+  const setPokémonState = useContext(setPokémonStateContext);
 
   const boardList = PokémonState.list.results;
 
@@ -34,12 +41,25 @@ function BoardPage(props) {
                   margin: 10px;
                 `}
               >
-                <img src={item.prites}></img>
-                <div>{item.name}</div>
+                {" "}
+                <Link to={`${item.name}`} key={item.id}>
+                  <img src={item.prites}></img>
+                  <div>
+                    {`No${item.id}. 
+                  ${item.name}`}
+                  </div>
+                </Link>
+                <div>
+                  {item.types.map((item, index) => {
+                    return <div key={index}>{item.type.name}</div>;
+                  })}
+                </div>
               </div>
             );
           })
         : ""}
+
+      <Outlet />
     </div>
   );
 }
