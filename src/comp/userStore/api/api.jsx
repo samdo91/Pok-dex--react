@@ -7,3 +7,13 @@ export const request = async (url) => {
   }
   throw new Error("api를 받지 않았습니다");
 };
+
+export const pokeApi = async (url) => {
+  if (url) {
+    const listApi = await request(url);
+    return listApi;
+  } else {
+    const listApi = await request("api/v2/pokemon?limit=48&offset=0");
+    return listApi;
+  }
+};

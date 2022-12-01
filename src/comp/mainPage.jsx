@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import SearchBar from "./searchBar/searchBar";
 import BoardPage from "./board/board";
-import { request } from "./userStore/api/api";
+import { request, pokeApi } from "./userStore/api/api";
 import { useInView } from "react-intersection-observer";
 
 function MainPage() {
@@ -12,9 +12,12 @@ function MainPage() {
     pakesprites: [],
   });
 
-  const Pokémonlist = async () => {
-    const lists = await request("api/v2/pokemon?limit=24&offset=0");
+  const { ref, inView, entry } = useInView({});
+
+  const Pokémonlist = async (url) => {
+    const lists = await pokeApi(url);
     let pritesList = [];
+    console.log("lists", lists);
 
     lists.results.forEach(async (item) => {
       const pokeState = await request(item.url);
@@ -35,17 +38,15 @@ function MainPage() {
 
   useEffect(() => {
     try {
-      if (PokémonState.list === null) {
+      if (PokémonState.list.length === 0) {
         Pokémonlist();
+      } else {
+        Pokémonlist(PokémonState.list.next);
       }
     } catch {
       console.log("api를 못받아 왔어!");
     }
-  }, []); //
-
-  const { ref, inView, entry } = useInView({});
-
-  console.log(inView);
+  }, [inView]); //
 
   return (
     <div>
