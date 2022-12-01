@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import SearchBar from "./searchBar/searchBar";
 import BoardPage from "./board/board";
 import { request } from "./userStore/api/api";
+import { useInView } from "react-intersection-observer";
 
 function MainPage() {
   const [PokémonState, setPokémonState] = useState({
@@ -34,13 +35,18 @@ function MainPage() {
 
   useEffect(() => {
     try {
-      Pokémonlist();
+      if (PokémonState.list === null) {
+        Pokémonlist();
+      }
     } catch {
       console.log("api를 못받아 왔어!");
     }
   }, []); //
 
-  console.log(PokémonState);
+  const { ref, inView, entry } = useInView({});
+
+  console.log(inView);
+
   return (
     <div>
       <h1> 포켓몬 도감</h1>
@@ -52,6 +58,10 @@ function MainPage() {
         PokémonState={PokémonState}
         setPokémonState={setPokémonState}
       />
+
+      <div ref={ref}>
+        <h2>{`${inView}`}</h2>
+      </div>
     </div>
   );
 }

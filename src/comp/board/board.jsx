@@ -2,7 +2,7 @@ import { css } from "@emotion/css";
 
 function BoardPage(props) {
   const { PokémonState, setPokémonState } = props;
-  console.log(PokémonState.pakesprites);
+
   const boardList = PokémonState.list.results;
 
   const pakespritesList = PokémonState.pakesprites;
