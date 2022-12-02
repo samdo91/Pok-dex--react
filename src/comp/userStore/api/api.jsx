@@ -13,7 +13,17 @@ export const pokeApi = async (url) => {
     const listApi = await request(url);
     return listApi;
   } else {
-    const listApi = await request("api/v2/pokemon?limit=12&offset=0");
+    const listApi = await request("api/v2/pokemon?limit=24&offset=0");
+    return listApi;
+  }
+};
+
+export const pokeSpecialApi = async (url) => {
+  if (url) {
+    const listApi = await request(url);
+    return listApi;
+  } else {
+    const listApi = await request("api/v2/pokemon-species/?limit=48&offset=0");
     return listApi;
   }
 };

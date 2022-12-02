@@ -6,9 +6,11 @@ import {
   setPokémonStateContext,
 } from "../userStore/contextApi/contextApi";
 
-function BoardPage() {
+function BoardPage(props) {
   const PokémonState = useContext(PokémonStateContext);
   const setPokémonState = useContext(setPokémonStateContext);
+  const { koreanNamelistState } = props;
+  console.log(koreanNamelistState.koreanNamelist);
 
   const boardList = PokémonState.list.results;
 
@@ -41,12 +43,11 @@ function BoardPage() {
                   margin: 10px;
                 `}
               >
-                {" "}
                 <Link to={`${item.name}`} key={item.id}>
                   <img src={item.prites}></img>
                   <div>
                     {`No${item.id}. 
-                  ${item.name}`}
+                  ${koreanNamelistState.koreanNamelist[item.id - 1]}`}
                   </div>
                 </Link>
                 <div>

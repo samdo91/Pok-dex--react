@@ -8,6 +8,7 @@ const ContextApi = (props) => {
     keyword: "포켓몬",
     searchValue: "",
     pakesprites: [],
+    pakeSpecialList: [],
   });
 
   return (
